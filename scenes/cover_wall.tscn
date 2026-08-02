@@ -1,0 +1,14 @@
+[gd_scene load_steps=3 format=3 uid="uid://cover_wall_scene_id"]
+
+[ext_resource type="Script" path="res://scripts/cover_wall.gd" id="1_script"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_wall"]
+size = Vector2(64, 64)
+
+[node name="CoverWall" type="StaticBody2D"]
+collision_layer = 1
+collision_mask = 6
+script = ExtResource("1_script")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_wall")

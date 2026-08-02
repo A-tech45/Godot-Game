@@ -1,0 +1,34 @@
+[gd_scene load_steps=6 format=3 uid="uid://arena_scene_id"]
+
+[ext_resource type="Script" path="res://scripts/arena.gd" id="1_script"]
+
+[ext_resource type="PackedScene" uid="uid://house_map_scene_id" path="res://scenes/house_map.tscn" id="2_house_map"]
+
+[ext_resource type="PackedScene" uid="uid://hud_scene_id" path="res://scenes/hud.tscn" id="3_hud"]
+
+[ext_resource type="PackedScene" uid="uid://touch_controls_id" path="res://scenes/touch_controls.tscn" id="4_touch"]
+
+[sub_resource type="Environment" id="Environment_arena"]
+background_mode = 3
+glow_enabled = true
+glow_intensity = 0.8
+glow_strength = 1.1
+glow_blend_mode = 0
+
+[node name="Arena" type="Node2D"]
+script = ExtResource("1_script")
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_arena")
+
+[node name="HouseMap" parent="." instance=ExtResource("2_house_map")]
+
+[node name="Entities" type="Node2D" parent="."]
+
+[node name="Camera2D" type="Camera2D" parent="."]
+zoom = Vector2(0.85, 0.85)
+position_smoothing_enabled = true
+
+[node name="HUD" parent="." instance=ExtResource("3_hud")]
+
+[node name="TouchControls" parent="." instance=ExtResource("4_touch")]

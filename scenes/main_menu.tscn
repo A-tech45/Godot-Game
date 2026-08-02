@@ -1,0 +1,177 @@
+[gd_scene format=3 uid="uid://dybhi2fnijtih"]
+
+[ext_resource type="Script" uid="uid://ws5cy4ropyt3" path="res://scripts/main_menu.gd" id="1_script"]
+
+[node name="MainMenu" type="Control" unique_id=1250306622]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_script")
+
+[node name="Background" type="ColorRect" parent="." unique_id=966625668]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.05, 0.06, 0.1, 1)
+
+[node name="Margin" type="MarginContainer" parent="." unique_id=2130243740]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 60
+theme_override_constants/margin_top = 40
+theme_override_constants/margin_right = 60
+theme_override_constants/margin_bottom = 40
+
+[node name="VBox" type="VBoxContainer" parent="Margin" unique_id=928686812]
+layout_mode = 2
+theme_override_constants/separation = 20
+alignment = 1
+
+[node name="Title" type="Label" parent="Margin/VBox" unique_id=399554587]
+texture_filter = 1
+layout_mode = 2
+theme_override_colors/font_color = Color(0.2, 0.9, 1, 1)
+theme_override_font_sizes/font_size = 54
+text = "TERRITORY BREAK"
+horizontal_alignment = 1
+
+[node name="Subtitle" type="Label" parent="Margin/VBox" unique_id=205093479]
+texture_filter = 1
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 0.4, 0.2, 1)
+theme_override_font_sizes/font_size = 20
+text = "EVERY KILL COLLAPSES THE GROUND UNDER YOUR FEET"
+horizontal_alignment = 1
+
+[node name="Spacer" type="Control" parent="Margin/VBox" unique_id=1719893132]
+custom_minimum_size = Vector2(0, 20)
+layout_mode = 2
+
+[node name="SettingsBox" type="VBoxContainer" parent="Margin/VBox" unique_id=1473281818]
+custom_minimum_size = Vector2(400, 0)
+layout_mode = 2
+size_flags_horizontal = 4
+theme_override_constants/separation = 15
+
+[node name="BotLabel" type="Label" parent="Margin/VBox/SettingsBox" unique_id=594886194]
+texture_filter = 1
+layout_mode = 2
+text = "ARENA MATCHMAKING"
+
+[node name="BotOptionButton" type="OptionButton" parent="Margin/VBox/SettingsBox" unique_id=742421333]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 40)
+layout_mode = 2
+
+[node name="GridLabel" type="Label" parent="Margin/VBox/SettingsBox" unique_id=348731699]
+texture_filter = 1
+layout_mode = 2
+text = "ARENA GRID SIZE"
+
+[node name="GridOptionButton" type="OptionButton" parent="Margin/VBox/SettingsBox" unique_id=775117624]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 40)
+layout_mode = 2
+
+[node name="Spacer2" type="Control" parent="Margin/VBox" unique_id=1897942719]
+custom_minimum_size = Vector2(0, 15)
+layout_mode = 2
+
+[node name="ButtonsBox" type="VBoxContainer" parent="Margin/VBox" unique_id=339645848]
+custom_minimum_size = Vector2(300, 0)
+layout_mode = 2
+size_flags_horizontal = 4
+theme_override_constants/separation = 12
+
+[node name="StartButton" type="Button" parent="Margin/VBox/ButtonsBox" unique_id=276504323]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 50)
+layout_mode = 2
+theme_override_font_sizes/font_size = 20
+text = "SOLO PLAY (BOTS)"
+
+[node name="MultiplayerButton" type="Button" parent="Margin/VBox/ButtonsBox" unique_id=276504324]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 50)
+layout_mode = 2
+theme_override_colors/font_color = Color(0.3, 0.9, 1, 1)
+theme_override_font_sizes/font_size = 20
+text = "ONLINE MULTIPLAYER"
+
+[node name="GuideButton" type="Button" parent="Margin/VBox/ButtonsBox" unique_id=1846047083]
+unique_name_in_owner = true
+texture_filter = 1
+custom_minimum_size = Vector2(0, 40)
+layout_mode = 2
+text = "HOW TO PLAY"
+
+[node name="QuitButton" type="Button" parent="Margin/VBox/ButtonsBox" unique_id=1469219139]
+unique_name_in_owner = true
+texture_filter = 1
+custom_minimum_size = Vector2(0, 40)
+layout_mode = 2
+text = "QUIT"
+
+[node name="GuidePanel" type="PanelContainer" parent="." unique_id=174394831]
+unique_name_in_owner = true
+visible = false
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -300.0
+offset_top = -220.0
+offset_right = 300.0
+offset_bottom = 220.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Margin" type="MarginContainer" parent="GuidePanel" unique_id=994566682]
+layout_mode = 2
+theme_override_constants/margin_left = 25
+theme_override_constants/margin_top = 25
+theme_override_constants/margin_right = 25
+theme_override_constants/margin_bottom = 25
+
+[node name="VBox" type="VBoxContainer" parent="GuidePanel/Margin" unique_id=163954856]
+layout_mode = 2
+theme_override_constants/separation = 15
+
+[node name="GuideTitle" type="Label" parent="GuidePanel/Margin/VBox" unique_id=664419416]
+layout_mode = 2
+theme_override_font_sizes/font_size = 24
+text = "HOW TO PLAY & CONTROLS"
+horizontal_alignment = 1
+
+[node name="GuideText" type="RichTextLabel" parent="GuidePanel/Margin/VBox" unique_id=1880937508]
+layout_mode = 2
+size_flags_vertical = 3
+bbcode_enabled = true
+text = "[color=#50e0ff][b]CONTROLS:[/b][/color]
+- [b]WASD / Arrow Keys[/b]: Move Character
+- [b]Mouse Cursor[/b]: Aim 360°
+- [b]Left Click[/b]: Shoot Current Weapon
+- [b]Spacebar[/b]: Dodge Roll Dash (Invulnerable during roll!)
+- [b]Keys 1-4[/b]: Switch Weapons (Rifle, Shotgun, Railgun, Launcher)
+
+[color=#ff6030][b]THE CRUMBLING TILE RULE:[/b][/color]
+Whenever ANY combatant dies, the tile grid underneath them CRACKS (glows orange) for 1.4 seconds, then COLLAPSES into the abyss! Stepping into a collapsed tile causes you to fall into the void and die immediately! The arena shrinks with every kill."
+
+[node name="CloseGuideButton" type="Button" parent="GuidePanel/Margin/VBox" unique_id=287374266]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(150, 40)
+layout_mode = 2
+size_flags_horizontal = 4
+text = "GOT IT!"

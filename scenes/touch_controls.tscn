@@ -1,0 +1,88 @@
+[gd_scene load_steps=3 format=3 uid="uid://touch_controls_id"]
+
+[ext_resource type="Script" path="res://scripts/touch_controls.gd" id="1_script"]
+[ext_resource type="Script" path="res://scripts/virtual_joystick.gd" id="2_joystick"]
+
+[node name="TouchControls" type="CanvasLayer"]
+layer = 11
+script = ExtResource("1_script")
+
+[node name="ControlsContainer" type="Control" parent="."]
+unique_name_in_owner = true
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="LeftJoystick" type="Control" parent="ControlsContainer"]
+unique_name_in_owner = true
+layout_mode = 1
+anchor_left = 0.0
+anchor_top = 1.0
+anchor_right = 0.0
+anchor_bottom = 1.0
+offset_left = 30.0
+offset_top = -200.0
+offset_right = 200.0
+offset_bottom = -30.0
+script = ExtResource("2_joystick")
+base_radius = 75.0
+knob_radius = 30.0
+dead_zone = 0.15
+base_color = Color(1, 1, 1, 0.12)
+base_outline_color = Color(1, 1, 1, 0.3)
+knob_color = Color(1, 1, 1, 0.35)
+knob_active_color = Color(0.3, 0.9, 1, 0.6)
+
+[node name="RightJoystick" type="Control" parent="ControlsContainer"]
+unique_name_in_owner = true
+layout_mode = 1
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -200.0
+offset_top = -200.0
+offset_right = -30.0
+offset_bottom = -30.0
+script = ExtResource("2_joystick")
+base_radius = 75.0
+knob_radius = 30.0
+dead_zone = 0.2
+base_color = Color(1, 0.4, 0.3, 0.12)
+base_outline_color = Color(1, 0.5, 0.3, 0.35)
+knob_color = Color(1, 0.5, 0.3, 0.35)
+knob_active_color = Color(1, 0.3, 0.2, 0.7)
+
+[node name="DashButton" type="Button" parent="ControlsContainer"]
+unique_name_in_owner = true
+layout_mode = 1
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -285.0
+offset_top = -290.0
+offset_right = -215.0
+offset_bottom = -220.0
+theme_override_colors/font_color = Color(0.3, 0.95, 1, 1)
+theme_override_font_sizes/font_size = 14
+text = "DASH"
+
+[node name="WeaponSwitchButton" type="Button" parent="ControlsContainer"]
+unique_name_in_owner = true
+layout_mode = 1
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -200.0
+offset_top = -290.0
+offset_right = -110.0
+offset_bottom = -220.0
+theme_override_colors/font_color = Color(1, 0.85, 0.2, 1)
+theme_override_font_sizes/font_size = 13
+text = "WEAPON"

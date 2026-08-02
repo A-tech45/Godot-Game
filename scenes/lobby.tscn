@@ -1,0 +1,230 @@
+[gd_scene load_steps=2 format=3 uid="uid://lobby_scene_id"]
+
+[ext_resource type="Script" path="res://scripts/lobby.gd" id="1_script"]
+
+[node name="Lobby" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_script")
+
+[node name="Background" type="ColorRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.05, 0.06, 0.1, 1)
+
+[node name="Margin" type="MarginContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 60
+theme_override_constants/margin_top = 40
+theme_override_constants/margin_right = 60
+theme_override_constants/margin_bottom = 40
+
+[node name="VBox" type="VBoxContainer" parent="Margin"]
+layout_mode = 2
+theme_override_constants/separation = 20
+alignment = 1
+
+[node name="Title" type="Label" parent="Margin/VBox"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.2, 0.9, 1, 1)
+theme_override_font_sizes/font_size = 44
+text = "ONLINE MULTIPLAYER LOBBY"
+horizontal_alignment = 1
+
+[node name="NameContainer" type="HBoxContainer" parent="Margin/VBox"]
+layout_mode = 2
+size_flags_horizontal = 4
+theme_override_constants/separation = 15
+
+[node name="NameLabel" type="Label" parent="Margin/VBox/NameContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 18
+text = "YOUR PLAYER NAME:"
+
+[node name="NameEdit" type="LineEdit" parent="Margin/VBox/NameContainer"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(250, 40)
+layout_mode = 2
+theme_override_font_sizes/font_size = 16
+placeholder_text = "Enter Custom Name..."
+max_length = 20
+
+[node name="StatusLabel" type="Label" parent="Margin/VBox"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 0.85, 0.3, 1)
+theme_override_font_sizes/font_size = 16
+horizontal_alignment = 1
+
+[node name="ModeTabs" type="TabContainer" parent="Margin/VBox"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(500, 260)
+layout_mode = 2
+size_flags_horizontal = 4
+
+[node name="Host Room" type="MarginContainer" parent="Margin/VBox/ModeTabs"]
+layout_mode = 2
+theme_override_constants/margin_left = 30
+theme_override_constants/margin_top = 20
+theme_override_constants/margin_right = 30
+theme_override_constants/margin_bottom = 20
+
+[node name="VBox" type="VBoxContainer" parent="Margin/VBox/ModeTabs/Host Room"]
+layout_mode = 2
+theme_override_constants/separation = 15
+
+[node name="PrivateCheckBox" type="CheckBox" parent="Margin/VBox/ModeTabs/Host Room/VBox"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_font_sizes/font_size = 16
+text = "Private Room (Join via Code Only)"
+
+[node name="BotBox" type="HBoxContainer" parent="Margin/VBox/ModeTabs/Host Room/VBox"]
+layout_mode = 2
+theme_override_constants/separation = 12
+
+[node name="Label" type="Label" parent="Margin/VBox/ModeTabs/Host Room/VBox/BotBox"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 16
+text = "AI Bots to Add:"
+
+[node name="ManualBotsSpin" type="SpinBox" parent="Margin/VBox/ModeTabs/Host Room/VBox/BotBox"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(100, 36)
+layout_mode = 2
+min_value = 0.0
+max_value = 11.0
+value = 0.0
+
+[node name="HostRoomButton" type="Button" parent="Margin/VBox/ModeTabs/Host Room/VBox"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(200, 48)
+layout_mode = 2
+size_flags_horizontal = 4
+theme_override_font_sizes/font_size = 18
+text = "CREATE LOBBY ROOM"
+
+[node name="Join Room" type="MarginContainer" parent="Margin/VBox/ModeTabs"]
+visible = false
+layout_mode = 2
+theme_override_constants/margin_left = 30
+theme_override_constants/margin_top = 25
+theme_override_constants/margin_right = 30
+theme_override_constants/margin_bottom = 25
+
+[node name="VBox" type="VBoxContainer" parent="Margin/VBox/ModeTabs/Join Room"]
+layout_mode = 2
+theme_override_constants/separation = 18
+alignment = 1
+
+[node name="CodeBox" type="HBoxContainer" parent="Margin/VBox/ModeTabs/Join Room/VBox"]
+layout_mode = 2
+size_flags_horizontal = 4
+theme_override_constants/separation = 15
+
+[node name="Label" type="Label" parent="Margin/VBox/ModeTabs/Join Room/VBox/CodeBox"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 18
+text = "ENTER ROOM CODE:"
+
+[node name="CodeEdit" type="LineEdit" parent="Margin/VBox/ModeTabs/Join Room/VBox/CodeBox"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(240, 42)
+layout_mode = 2
+theme_override_font_sizes/font_size = 18
+placeholder_text = "ROOM CODE OR IP"
+max_length = 30
+
+[node name="JoinRoomButton" type="Button" parent="Margin/VBox/ModeTabs/Join Room/VBox"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(200, 48)
+layout_mode = 2
+size_flags_horizontal = 4
+theme_override_font_sizes/font_size = 18
+text = "JOIN MATCH"
+
+[node name="RoomPanel" type="PanelContainer" parent="Margin/VBox"]
+unique_name_in_owner = true
+visible = false
+custom_minimum_size = Vector2(520, 300)
+layout_mode = 2
+size_flags_horizontal = 4
+
+[node name="Margin" type="MarginContainer" parent="Margin/VBox/RoomPanel"]
+layout_mode = 2
+theme_override_constants/margin_left = 25
+theme_override_constants/margin_top = 20
+theme_override_constants/margin_right = 25
+theme_override_constants/margin_bottom = 20
+
+[node name="VBox" type="VBoxContainer" parent="Margin/VBox/RoomPanel/Margin"]
+layout_mode = 2
+theme_override_constants/separation = 15
+
+[node name="HeaderBox" type="HBoxContainer" parent="Margin/VBox/RoomPanel/Margin/VBox"]
+layout_mode = 2
+theme_override_constants/separation = 20
+
+[node name="RoomCodeLabel" type="Label" parent="Margin/VBox/RoomPanel/Margin/VBox/HeaderBox"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_colors/font_color = Color(0.3, 0.9, 1, 1)
+theme_override_font_sizes/font_size = 22
+text = "ROOM CODE: ABC123"
+
+[node name="CopyCodeButton" type="Button" parent="Margin/VBox/RoomPanel/Margin/VBox/HeaderBox"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(120, 34)
+layout_mode = 2
+text = "COPY CODE"
+
+[node name="ListScroll" type="ScrollContainer" parent="Margin/VBox/RoomPanel/Margin/VBox"]
+custom_minimum_size = Vector2(0, 150)
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="PlayerListBox" type="VBoxContainer" parent="Margin/VBox/RoomPanel/Margin/VBox/ListScroll"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/separation = 8
+
+[node name="ButtonsBox" type="HBoxContainer" parent="Margin/VBox/RoomPanel/Margin/VBox"]
+layout_mode = 2
+theme_override_constants/separation = 20
+alignment = 1
+
+[node name="StartMatchButton" type="Button" parent="Margin/VBox/RoomPanel/Margin/VBox/ButtonsBox"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(200, 48)
+layout_mode = 2
+theme_override_font_sizes/font_size = 18
+text = "START MATCH"
+
+[node name="LeaveRoomButton" type="Button" parent="Margin/VBox/RoomPanel/Margin/VBox/ButtonsBox"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(140, 48)
+layout_mode = 2
+theme_override_font_sizes/font_size = 16
+text = "LEAVE ROOM"
+
+[node name="BackMenuButton" type="Button" parent="Margin/VBox"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(180, 40)
+layout_mode = 2
+size_flags_horizontal = 4
+text = "BACK TO MAIN MENU"
