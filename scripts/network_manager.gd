@@ -15,8 +15,7 @@ const MAX_PLAYERS: int = 12
 
 # ─── RELAY SERVER URL ───
 # For local testing: "ws://localhost:9090"
-# For production: replace with your Render.com URL
-const RELAY_URL: String = "ws://localhost:9090"
+const RELAY_URL: String = "wss://server-relay.onrender.com"
 
 var is_online: bool = false
 var is_host: bool = false
