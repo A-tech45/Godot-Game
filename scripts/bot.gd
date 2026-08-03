@@ -68,6 +68,9 @@ func setup_bot(p_name: String, hue: float, weapon_idx: int) -> void:
 
 var target_net_pos: Vector2 = Vector2.ZERO
 var target_net_rot: float = 0.0
+var net_sync_timer: float = 0.0
+var last_sent_pos: Vector2 = Vector2.ZERO
+var last_sent_rot: float = 0.0
 
 func _physics_process(delta: float) -> void:
 	if is_dead:
@@ -83,8 +86,8 @@ func _physics_process(delta: float) -> void:
 	# Non-host clients interpolate position from host
 	if NetworkManager.is_online and not NetworkManager.is_host:
 		if target_net_pos != Vector2.ZERO:
-			global_position = global_position.lerp(target_net_pos, delta * 18.0)
-			rotation = lerp_angle(rotation, target_net_rot, delta * 18.0)
+			global_position = global_position.lerp(target_net_pos, clamp(delta * 22.0, 0.0, 1.0))
+			rotation = lerp_angle(rotation, target_net_rot, clamp(delta * 22.0, 0.0, 1.0))
 		return
 			
 	# Update Target
@@ -145,13 +148,25 @@ func _physics_process(delta: float) -> void:
 	_clamp_position_to_map()
 	
 	if NetworkManager.is_online and NetworkManager.is_host:
-		if NetworkManager.is_relay_mode:
-			var node_path = str(get_path())
-			NetworkManager.send_relay_rpc(node_path, "_relay_bot_transform", [
-				NetworkManager.vec2_to_array(global_position), rotation
-			])
-		else:
-			rpc("_sync_bot_transform", global_position, rotation)
+		net_sync_timer += delta
+		if net_sync_timer >= 0.066: # 15 Hz tick rate for bots to save host bandwidth
+			var pos_changed = global_position.distance_squared_to(last_sent_pos) > 0.25
+			var rot_changed = abs(angle_difference(rotation, last_sent_rot)) > 0.02
+			if pos_changed or rot_changed:
+				net_sync_timer = 0.0
+				last_sent_pos = global_position
+				last_sent_rot = rotation
+
+				var rounded_pos = Vector2(snappedf(global_position.x, 0.1), snappedf(global_position.y, 0.1))
+				var rounded_rot = snappedf(rotation, 0.01)
+
+				if NetworkManager.is_relay_mode:
+					var node_path = str(get_path())
+					NetworkManager.send_relay_rpc(node_path, "_relay_bot_transform", [
+						NetworkManager.vec2_to_array(rounded_pos), rounded_rot
+					])
+				else:
+					rpc("_sync_bot_transform", rounded_pos, rounded_rot)
 
 
 ## Called via relay for bot transform sync

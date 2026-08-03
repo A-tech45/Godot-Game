@@ -60,6 +60,9 @@ func _ready() -> void:
 
 var target_net_pos: Vector2 = Vector2.ZERO
 var target_net_rot: float = 0.0
+var net_sync_timer: float = 0.0
+var last_sent_pos: Vector2 = Vector2.ZERO
+var last_sent_rot: float = 0.0
 
 func _physics_process(delta: float) -> void:
 	if is_dead:
@@ -76,11 +79,11 @@ func _physics_process(delta: float) -> void:
 		dash_cooldown -= delta
 		dash_cooldown_updated.emit(dash_cooldown, max_dash_cooldown)
 		
-	# If this is a remote network player, interpolate position & rotation
+	# If this is a remote network player, interpolate position & rotation smoothly
 	if not is_local_player():
 		if target_net_pos != Vector2.ZERO:
-			global_position = global_position.lerp(target_net_pos, delta * 18.0)
-			rotation = lerp_angle(rotation, target_net_rot, delta * 18.0)
+			global_position = global_position.lerp(target_net_pos, clamp(delta * 22.0, 0.0, 1.0))
+			rotation = lerp_angle(rotation, target_net_rot, clamp(delta * 22.0, 0.0, 1.0))
 		return
 
 	# Determine if using touch controls
@@ -104,7 +107,7 @@ func _physics_process(delta: float) -> void:
 		move_and_slide()
 		_spawn_ghost_trail()
 		_clamp_position_to_map()
-		_sync_transform_to_peers()
+		_sync_transform_to_peers(delta)
 		if dash_timer <= 0.0:
 			is_dashing = false
 		return
@@ -118,7 +121,7 @@ func _physics_process(delta: float) -> void:
 	velocity = input_vec.normalized() * move_speed
 	move_and_slide()
 	_clamp_position_to_map()
-	_sync_transform_to_peers()
+	_sync_transform_to_peers(delta)
 	
 	# Handle Dash Input
 	var dash_requested: bool = false
@@ -158,15 +161,34 @@ func _physics_process(delta: float) -> void:
 		_shoot(current_weapon)
 
 
-func _sync_transform_to_peers() -> void:
-	if NetworkManager.is_online:
-		if NetworkManager.is_relay_mode:
-			var node_path = str(get_path())
-			NetworkManager.send_relay_rpc(node_path, "_relay_sync_transform", [
-				NetworkManager.vec2_to_array(global_position), rotation
-			])
-		else:
-			rpc("_client_sync_transform", global_position, rotation)
+func _sync_transform_to_peers(delta: float) -> void:
+	if not NetworkManager.is_online:
+		return
+
+	net_sync_timer += delta
+	if net_sync_timer < 0.05: # 20 Hz tick rate max (prevents network buffer bloat)
+		return
+
+	var pos_changed = global_position.distance_squared_to(last_sent_pos) > 0.25
+	var rot_changed = abs(angle_difference(rotation, last_sent_rot)) > 0.02
+	if not pos_changed and not rot_changed:
+		return
+
+	net_sync_timer = 0.0
+	last_sent_pos = global_position
+	last_sent_rot = rotation
+
+	# Round position and rotation to reduce JSON string size
+	var rounded_pos = Vector2(snappedf(global_position.x, 0.1), snappedf(global_position.y, 0.1))
+	var rounded_rot = snappedf(rotation, 0.01)
+
+	if NetworkManager.is_relay_mode:
+		var node_path = str(get_path())
+		NetworkManager.send_relay_rpc(node_path, "_relay_sync_transform", [
+			NetworkManager.vec2_to_array(rounded_pos), rounded_rot
+		])
+	else:
+		rpc("_client_sync_transform", rounded_pos, rounded_rot)
 
 
 ## Called via relay to sync transform from remote player
