@@ -32,12 +32,7 @@ var bot_names = [
 
 func _ready() -> void:
 	if weapon == null:
-		var weapons_pool = [
-			Weapon.create_rifle(),
-			Weapon.create_shotgun(),
-			Weapon.create_railgun(),
-			Weapon.create_launcher()
-		]
+		var weapons_pool = Weapon.get_all_weapons()
 		weapon = weapons_pool[randi() % weapons_pool.size()]
 	
 	if display_name == "Bot":
@@ -54,12 +49,7 @@ func _ready() -> void:
 
 func setup_bot(p_name: String, hue: float, weapon_idx: int) -> void:
 	display_name = p_name
-	var weapons_pool = [
-		Weapon.create_rifle(),
-		Weapon.create_shotgun(),
-		Weapon.create_railgun(),
-		Weapon.create_launcher()
-	]
+	var weapons_pool = Weapon.get_all_weapons()
 	var safe_idx = clamp(weapon_idx, 0, weapons_pool.size() - 1)
 	weapon = weapons_pool[safe_idx]
 	if body_sprite:

@@ -80,55 +80,29 @@ func _apply_pro_styling() -> void:
 	room_panel.add_theme_stylebox_override("panel", panel_style)
 
 
+func _make_box(bg: Color, border: Color, radius: int = 10, pad: int = 10, shadow: Color = Color.TRANSPARENT, shadow_sz: int = 0) -> StyleBoxFlat:
+	var box = StyleBoxFlat.new()
+	box.bg_color = bg
+	box.border_color = border
+	box.set_border_width_all(2)
+	box.set_corner_radius_all(radius)
+	box.set_content_margin_all(pad)
+	if shadow_sz > 0:
+		box.shadow_color = shadow
+		box.shadow_size = shadow_sz
+	return box
+
+
 func _style_line_edit(le: LineEdit) -> void:
-	var normal = StyleBoxFlat.new()
-	normal.bg_color = Color(0.08, 0.1, 0.16, 0.9)
-	normal.border_color = Color(0.0, 0.8, 1.0, 0.4)
-	normal.set_border_width_all(2)
-	normal.set_corner_radius_all(10)
-	normal.set_content_margin_all(8)
-	
-	var focus = StyleBoxFlat.new()
-	focus.bg_color = Color(0.1, 0.14, 0.22, 0.95)
-	focus.border_color = Color(0.0, 0.94, 1.0, 0.9)
-	focus.set_border_width_all(2)
-	focus.set_corner_radius_all(10)
-	focus.set_content_margin_all(8)
-	focus.shadow_color = Color(0.0, 0.94, 1.0, 0.25)
-	focus.shadow_size = 10
-	
-	le.add_theme_stylebox_override("normal", normal)
-	le.add_theme_stylebox_override("focus", focus)
+	le.add_theme_stylebox_override("normal", _make_box(Color(0.08, 0.1, 0.16, 0.9), Color(0.0, 0.8, 1.0, 0.4), 10, 8))
+	le.add_theme_stylebox_override("focus", _make_box(Color(0.1, 0.14, 0.22, 0.95), Color(0.0, 0.94, 1.0, 0.9), 10, 8, Color(0.0, 0.94, 1.0, 0.25), 10))
 
 
 func _style_btn(btn: Button, bg: Color, hover_bg: Color, accent: Color) -> void:
-	var normal = StyleBoxFlat.new()
-	normal.bg_color = bg
-	normal.border_color = Color(accent.r, accent.g, accent.b, 0.4)
-	normal.set_border_width_all(2)
-	normal.set_corner_radius_all(10)
-	normal.set_content_margin_all(10)
-	
-	var hover = StyleBoxFlat.new()
-	hover.bg_color = hover_bg
-	hover.border_color = accent
-	hover.set_border_width_all(2)
-	hover.set_corner_radius_all(10)
-	hover.set_content_margin_all(10)
-	hover.shadow_color = Color(accent.r, accent.g, accent.b, 0.3)
-	hover.shadow_size = 8
-	
-	var pressed = StyleBoxFlat.new()
-	pressed.bg_color = Color(accent.r * 0.4, accent.g * 0.4, accent.b * 0.4, 0.95)
-	pressed.border_color = accent
-	pressed.set_border_width_all(2)
-	pressed.set_corner_radius_all(10)
-	pressed.set_content_margin_all(10)
-	
-	btn.add_theme_stylebox_override("normal", normal)
-	btn.add_theme_stylebox_override("hover", hover)
-	btn.add_theme_stylebox_override("pressed", pressed)
-	btn.add_theme_stylebox_override("focus", hover)
+	btn.add_theme_stylebox_override("normal", _make_box(bg, Color(accent.r, accent.g, accent.b, 0.4)))
+	btn.add_theme_stylebox_override("hover", _make_box(hover_bg, accent, 10, 10, Color(accent.r, accent.g, accent.b, 0.3), 8))
+	btn.add_theme_stylebox_override("pressed", _make_box(Color(accent.r * 0.4, accent.g * 0.4, accent.b * 0.4, 0.95), accent))
+	btn.add_theme_stylebox_override("focus", btn.get_theme_stylebox("hover"))
 
 
 func _on_host_button_pressed() -> void:

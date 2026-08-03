@@ -82,3 +82,6 @@ static func create_launcher() -> Weapon:
 	w.bullet_size = 12.0
 	w.camera_shake = 8.0
 	return w
+
+static func get_all_weapons() -> Array[Weapon]:
+	return [create_rifle(), create_shotgun(), create_railgun(), create_launcher()]

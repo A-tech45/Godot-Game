@@ -56,34 +56,24 @@ func _apply_pro_styling() -> void:
 	guide_panel.add_theme_stylebox_override("panel", panel_style)
 
 
+func _make_box(bg: Color, border: Color, radius: int = 10, pad: int = 10, shadow: Color = Color.TRANSPARENT, shadow_sz: int = 0) -> StyleBoxFlat:
+	var box = StyleBoxFlat.new()
+	box.bg_color = bg
+	box.border_color = border
+	box.set_border_width_all(2)
+	box.set_corner_radius_all(radius)
+	box.set_content_margin_all(pad)
+	if shadow_sz > 0:
+		box.shadow_color = shadow
+		box.shadow_size = shadow_sz
+	return box
+
+
 func _style_button(btn: Button, bg: Color, hover_bg: Color, accent: Color) -> void:
-	var normal = StyleBoxFlat.new()
-	normal.bg_color = bg
-	normal.border_color = Color(accent.r, accent.g, accent.b, 0.4)
-	normal.set_border_width_all(2)
-	normal.set_corner_radius_all(10)
-	normal.set_content_margin_all(10)
-	
-	var hover = StyleBoxFlat.new()
-	hover.bg_color = hover_bg
-	hover.border_color = accent
-	hover.set_border_width_all(2)
-	hover.set_corner_radius_all(10)
-	hover.set_content_margin_all(10)
-	hover.shadow_color = Color(accent.r, accent.g, accent.b, 0.3)
-	hover.shadow_size = 8
-	
-	var pressed = StyleBoxFlat.new()
-	pressed.bg_color = Color(accent.r * 0.4, accent.g * 0.4, accent.b * 0.4, 0.95)
-	pressed.border_color = accent
-	pressed.set_border_width_all(2)
-	pressed.set_corner_radius_all(10)
-	pressed.set_content_margin_all(10)
-	
-	btn.add_theme_stylebox_override("normal", normal)
-	btn.add_theme_stylebox_override("hover", hover)
-	btn.add_theme_stylebox_override("pressed", pressed)
-	btn.add_theme_stylebox_override("focus", hover)
+	btn.add_theme_stylebox_override("normal", _make_box(bg, Color(accent.r, accent.g, accent.b, 0.4)))
+	btn.add_theme_stylebox_override("hover", _make_box(hover_bg, accent, 10, 10, Color(accent.r, accent.g, accent.b, 0.3), 8))
+	btn.add_theme_stylebox_override("pressed", _make_box(Color(accent.r * 0.4, accent.g * 0.4, accent.b * 0.4, 0.95), accent))
+	btn.add_theme_stylebox_override("focus", btn.get_theme_stylebox("hover"))
 
 func _on_multiplayer_pressed() -> void:
 	get_tree().change_scene_to_file("res://scenes/lobby.tscn")

@@ -112,8 +112,7 @@ func on_combatant_died(victim: Node2D, killer: Node2D = null, cause: String = "S
 
 ## Called via relay for kill feed
 func _relay_kill_feed(p_killer_name: String, p_victim_name: String, p_cause: String, p_current_alive: int) -> void:
-	kill_feed_event.emit(p_killer_name, p_victim_name, p_cause)
-	player_count_changed.emit(p_current_alive, total_combatants_start)
+	_sync_kill_feed(p_killer_name, p_victim_name, p_cause, p_current_alive)
 
 
 @rpc("authority", "call_local", "reliable")
@@ -153,8 +152,7 @@ func check_match_over() -> void:
 
 ## Called via relay for game over
 func _relay_game_over(p_winner_name: String) -> void:
-	var is_my_win = (player_node != null and is_instance_valid(player_node) and player_node.display_name == p_winner_name)
-	game_over.emit(p_winner_name, is_my_win)
+	_sync_game_over_event(p_winner_name)
 
 
 @rpc("authority", "call_local", "reliable")

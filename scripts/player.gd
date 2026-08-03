@@ -47,12 +47,7 @@ func _ready() -> void:
 		GameManager.player_node = self
 	GameManager.register_combatant(self)
 	
-	weapons = [
-		Weapon.create_rifle(),
-		Weapon.create_shotgun(),
-		Weapon.create_railgun(),
-		Weapon.create_launcher()
-	]
+	weapons = Weapon.get_all_weapons()
 	
 	current_health = max_health
 	health_changed.emit(current_health, max_health)
